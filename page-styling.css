@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box; 
+}
+
+body{
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+    border-radius: 15px;
+    border: 1px solid;
+    border-color: #43444b00;
+    position: relative;
+}
