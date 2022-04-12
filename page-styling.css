@@ -28,7 +28,7 @@ body{
 /* Styling for header */
 .header {
     display: flex;
-    height: 50px;
+    height: 70px;
     width: 100%;
     background-color: #495057;
     border-radius: 5px;
