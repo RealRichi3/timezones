@@ -4,6 +4,9 @@
 
 body{
     height: 100vh;
+    background-color: #212529;
+    /* display: flex; */
+    font-size: 20px;
 }
 
 .container {
@@ -11,10 +14,109 @@ body{
     flex-direction: column;
     font-family: sans-serif;
     width: 100%;
-    height: 100vh;
+    height: 500px;
     margin: auto;
+    margin-top: 150px;
     border-radius: 15px;
     border: 1px solid;
     border-color: #43444b00;
+    background-color: #343A40;
     position: relative;
+}
+
+
+/* Styling for header */
+.header {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    background-color: #495057;
+    border-radius: 5px;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+#header-content {
+    display: flex;
+    width: 200px;
+    margin: auto;
+    justify-content: center;
+}
+
+select{
+    width: 150px;
+    border-radius: 5px;
+    font-size: 10px;
+    padding-left: 3px;
+    margin-left: 10px;
+}
+
+
+/* Styling for the body of the container */
+.container-body {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.pane{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.mid-pane{ 
+    flex: 1.5;
+    padding: 40px 0;
+}
+
+.container-body > div{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.clock-container{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #ADB5BD;
+    padding: 1px;
+}
+
+.time{
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ADB5BD;
+}
+
+.digi-time{
+    font-weight: bold;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-size: 250%;
+}
+
+.country-details{
+    flex: 1;
+    background-color: #6C757D;
+}
+
+.mid-pane > .clock-container *{
+    background-color: #22262a;
+    border-radius: 5px;
+    font-size: 170%;
+}
+
+.mid-pane > .clock-container {
+    background-color: #212529;
+    font-size: 150%;
+    margin: 20px
 }
