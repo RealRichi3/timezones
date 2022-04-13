@@ -6,15 +6,15 @@ body{
     height: 100vh;
     background-color: #212529;
     /* display: flex; */
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
-    width: 1200px;
-    height: 600px;
+    width: 900px;
+    height: 500px;
     margin: auto;
     margin-top: 150px;
     border-radius: 15px;
