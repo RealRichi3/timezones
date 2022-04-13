@@ -13,8 +13,8 @@ body{
     display: flex;
     flex-direction: column;
     font-family: sans-serif;
-    width: 100%;
-    height: 500px;
+    width: 1200px;
+    height: 600px;
     margin: auto;
     margin-top: 150px;
     border-radius: 15px;
@@ -39,15 +39,21 @@ body{
 
 #header-content {
     display: flex;
-    width: 200px;
+    width: 100%;
     margin: auto;
     justify-content: center;
 }
 
+#header-content > label{
+    font-weight: bold;
+    font-size: 120%;
+    color: rgb(194, 189, 189);
+}
+
 select{
-    width: 150px;
+    width: 25%;
     border-radius: 5px;
-    font-size: 10px;
+    font-size: 18px;
     padding-left: 3px;
     margin-left: 10px;
 }
@@ -58,17 +64,13 @@ select{
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
 }
 
 .pane{
     flex: 1;
     display: flex;
     flex-direction: column;
-}
-
-.mid-pane{ 
-    flex: 1.5;
-    padding: 40px 0;
 }
 
 .container-body > div{
@@ -98,7 +100,7 @@ select{
 
 .digi-time{
     font-weight: bold;
-    color: white;
+    color: #4b4d4e;
     padding: 0;
     margin: 0;
     font-size: 250%;
@@ -106,17 +108,65 @@ select{
 
 .country-details{
     flex: 1;
-    background-color: #6C757D;
+    background-color: #5d6063;
+    position: relative;
+    padding: 5px;
+    border-radius: 3px;
+}
+
+.country-details *{
+    margin: 0;
+}
+
+.city {
+    font-size: 200%;
+    margin-left: 5px;
+    font-weight: bold;
+    color: #ADB5BD;
+}
+
+.country{
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    bottom: 5px;
+    color: rgb(194, 189, 189);
+}
+
+
+/* Styling for the main clock >>> Mid pane */
+.mid-pane{ 
+    flex: 1.5;
+    padding: 40px 0;
+}
+
+#mid {
+    color: #d0dfee;
+    font-size: 420%;
+}
+
+#third-city > .country-details{
+    color: blue;
+}
+
+.mid-pane .country-details{
+    border: 1px solid;
+    border-right: 0;
+    border-bottom: 0px;
+    margin-top: 5px;
+    border-color: white;
+    color: #5d6063;
+    padding: 20px;
 }
 
 .mid-pane > .clock-container *{
     background-color: #22262a;
     border-radius: 5px;
-    font-size: 170%;
+    /* font-size: 170%; */
 }
 
 .mid-pane > .clock-container {
     background-color: #212529;
     font-size: 150%;
-    margin: 20px
+    margin: 20px;
 }
