@@ -1,38 +1,20 @@
-// var city = document.getElementById("place").value;
+// const ct = require('countries-and-timezones');
 
-// function calcTime(offset) {
+const countries = ct.getAllCountries();
+const cities = document.getElementById('city-list');
+// let sortedCountries = Object.keys(countries).sort()
+// let first = countries[sortedCountries[0]] 
+// console.log(first.name)
+// console.log(countries);
+// console.log()
+const countryList = Object.keys(countries)
+let cityList = document.querySelector('#city-list')
 
-//     let timeCity = {Bombay: "5.5", age: "35", location: "NYC"}
-//     var city = document.getElementById("place").value;
-//     if (city in timeCity){
-//         var offset = timeCity.city
-//     }
-//     var cityList =["Bombay"]
-//     var offsetList = ["5.5"];
-//     for (var i = 0; i < cityList.length; i++) {
-        
-//     }
-//     d = new Date();
-//     utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-//     nd = new Date(utc + (3600000*offset));
-//     return nd.toLocaleString();
-// }
-
-// // get Bombay time
-// console.log(calcTime('Bombay', '+5.5'));
-// // get Singapore time
-// console.log(calcTime('Singapore', '+8'));
-// // get London time
-// console.log(calcTime('London', '+1'));
-
-const timeCity = {Bombay: "5.5", age: "35", location: "NYC"}
-var city = 'Bombay'
-for (const key of Object.keys(timeCity)) {
-    if (key == city){
-        console.log(timeCity.city)
-    }
+// console.log(cityList)
+for (let i = 0; i < 10; i++) {
+    let city = document.createElement('option')
+    city.setAttribute("value", countryList[i])
+    city.textContent = countryList[i]
+    cityList.appendChild(city)
 }
-// if (city in timeCity){
-    
-//     console.log(timeCity.'city')
-// }
+
