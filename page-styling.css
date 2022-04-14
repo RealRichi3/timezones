@@ -146,9 +146,9 @@ select{
     font-size: 420%;
 }
 
-#third-city > .country-details{
+/* #third-city > .country-details{
     color: blue;
-}
+} */
 
 .mid-pane .country-details{
     border: 1px solid;
