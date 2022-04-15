@@ -1,10 +1,10 @@
 // const ct = require('countries-and-timezones/');
 
-
 let allTimeZones = ct.getAllTimezones();
 let timeZoneNames = Object.entries(allTimeZones).sort();
 const dropdown = document.getElementById('city-list');
 
+// Create Option element with all the timeZones -- In dropdown menu
 for (let i = 0; i < timeZoneNames.length; i++) {
     window.city = document.createElement('option')
     city.setAttribute("value", timeZoneNames[0][i])
@@ -12,25 +12,25 @@ for (let i = 0; i < timeZoneNames.length; i++) {
     dropdown.appendChild(city)
 }
 
-// Updates textcontent for country details in mid time-box
-function updateTextContents(className, city, continent){
+// Updates textcontent(City and Continent) to timebox
+function updateTextContents(selector, city, continent){
     if (city.includes('_')){
         city = city.split('_').join(' ')
     }
-    document.querySelector(`${className} .city`).textContent = city
-    document.querySelector(`${className} .country`).textContent = continent
+    document.querySelector(`${selector} .city`).textContent = city
+    document.querySelector(`${selector} .country`).textContent = continent
 }
 
 // Updates time to the mid time box
-function updateTime(time){
-    document.querySelector('#mid').textContent = time
+function updateTime(selector, time){
+    document.querySelector(selector).textContent = time
 }
 
 // Add offset to current time
 function calcTime(offset){
     const date = new Date()
     // console.log(date.getHours() + ' : ' + date.getMinutes())
-    let timeInMinutes = (date.getUTCHours() * 60) + (date.getUTCMinutes() + offset);
+    let timeInMinutes = (23 * 60) + (date.getUTCMinutes() + offset);
     let currTimeInHours = Math.floor(timeInMinutes / 60)
     let currTimeInMinutes = timeInMinutes % 60
 
@@ -59,18 +59,19 @@ dropdown.addEventListener('change', function() {
     let splitSelectedTimeZone = selectedTimeZone.split("/");
     let offset = ct.getTimezone(selectedTimeZone).utcOffset
     updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
-    updateTime(calcTime(offset))
+    updateTime('#mid', calcTime(offset))
   });
 
 
-
-
-// Code to gen time and timezone for other boxes
-let arrayTimeZones = ["Africa/Lagos", "Europe/London", "America/New_York", "Asia/Tokyo"]
+// To generate time and timezone for other boxes
+let arrayTimeZones = ["Europe/Paris", "Europe/London", "America/New_York", "Asia/Tokyo"]
 let otherTimeBoxes = document.getElementsByClassName('othercity')
 
 for (let step = 0; step < arrayTimeZones.length; step++) {
     cityAndContinent = arrayTimeZones[step].split('/')
-    let timeboxId = otherTimeBoxes[step].attributes[1].nodeValue
-    updateTextContents(`#${timeboxId}`, cityAndContinent[1], cityAndContinent[0])
+    let idValue = otherTimeBoxes[step].attributes[1].nodeValue
+    let offset = ct.getTimezone(arrayTimeZones[step]).utcOffset
+    
+    updateTextContents(`#${idValue}`, cityAndContinent[1], cityAndContinent[0])
+    updateTime(`#${idValue} .digi-time`, calcTime(offset))
   }
