@@ -7,6 +7,7 @@ body{
     background-color: #212529;
     /* display: flex; */
     font-size: 14px;
+    background: url(./img/background-gd8bdb1f77_1920.jpg);
 }
 
 .container {
@@ -22,6 +23,7 @@ body{
     border-color: #43444b00;
     background-color: #343A40;
     position: relative;
+    opacity: 0.65;
 }
 
 

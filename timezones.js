@@ -4,6 +4,7 @@ let allTimeZones = ct.getAllTimezones();
 let timeZoneNames = Object.entries(allTimeZones).sort();
 const dropdown = document.getElementById('city-list');
 
+
 // Create Option element with all the timeZones -- In dropdown menu
 for (let i = 0; i < timeZoneNames.length; i++) {
     window.city = document.createElement('option')
@@ -30,7 +31,7 @@ function updateTime(selector, time){
 function calcTime(offset){
     const date = new Date()
     // console.log(date.getHours() + ' : ' + date.getMinutes())
-    let timeInMinutes = (23 * 60) + (date.getUTCMinutes() + offset);
+    let timeInMinutes = (date.getUTCHours() * 60) + (date.getUTCMinutes() + offset);
     let currTimeInHours = Math.floor(timeInMinutes / 60)
     let currTimeInMinutes = timeInMinutes % 60
 
@@ -75,3 +76,5 @@ for (let step = 0; step < arrayTimeZones.length; step++) {
     updateTextContents(`#${idValue}`, cityAndContinent[1], cityAndContinent[0])
     updateTime(`#${idValue} .digi-time`, calcTime(offset))
   }
+
+  updateTime(`#mid`, calcTime(60))
