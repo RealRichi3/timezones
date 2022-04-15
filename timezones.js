@@ -13,9 +13,12 @@ for (let i = 0; i < timeZoneNames.length; i++) {
 }
 
 // Updates textcontent for country details in mid time-box
-function updateTextContents(city, continent){
-    document.querySelector(".mid-pane .city").textContent = city
-    document.querySelector(".mid-pane .country").textContent = continent
+function updateTextContents(className, city, continent){
+    if (city.includes('_')){
+        city = city.split('_').join(' ')
+    }
+    document.querySelector(`${className} .city`).textContent = city
+    document.querySelector(`${className} .country`).textContent = continent
 }
 
 // Updates time to the mid time box
@@ -26,8 +29,10 @@ function updateTime(time){
 // Add offset to current time
 function calcTime(offset){
     const date = new Date()
-    let timeInMinutes = (date.getUTCHours() * 60) + (date.getUTCMinutes()) + offset;
+    // console.log(date.getHours() + ' : ' + date.getMinutes())
+    let timeInMinutes = (date.getUTCHours() * 60) + (date.getUTCMinutes() + offset);
     let currTimeInHours = Math.floor(timeInMinutes / 60)
+    let currTimeInMinutes = timeInMinutes % 60
 
     if (currTimeInHours >= 24){
         if ((currTimeInHours - 24) >= 6){
@@ -37,8 +42,13 @@ function calcTime(offset){
             currTimeInHours = '0' + (currTimeInHours - 24).toString()
         }
     }
-
-    let currTimeInMinutes = timeInMinutes % 60
+    
+    if (String(currTimeInHours).length === 1){
+        currTimeInHours = '0' + currTimeInHours
+    }
+    if (String(currTimeInMinutes).length === 1){
+        currTimeInMinutes = '0' + currTimeInMinutes
+    }
 
     return ((currTimeInHours + ':' + currTimeInMinutes).toString())
 }
@@ -48,12 +58,19 @@ dropdown.addEventListener('change', function() {
     let selectedTimeZone = dropdown.options[dropdown.selectedIndex].text
     let splitSelectedTimeZone = selectedTimeZone.split("/");
     let offset = ct.getTimezone(selectedTimeZone).utcOffset
-    updateTextContents(splitSelectedTimeZone[1], splitSelectedTimeZone[0])
+    updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
     updateTime(calcTime(offset))
   });
 
 
 
 
-  const timezone = ct.getTimezone('Pacific/Kiritimati');
-  console.log(timezone);
+// Code to gen time and timezone for other boxes
+let arrayTimeZones = ["Africa/Lagos", "Europe/London", "America/New_York", "Asia/Tokyo"]
+let otherTimeBoxes = document.getElementsByClassName('othercity')
+
+for (let step = 0; step < arrayTimeZones.length; step++) {
+    cityAndContinent = arrayTimeZones[step].split('/')
+    let timeboxId = otherTimeBoxes[step].attributes[1].nodeValue
+    updateTextContents(`#${timeboxId}`, cityAndContinent[1], cityAndContinent[0])
+  }
