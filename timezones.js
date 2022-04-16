@@ -8,21 +8,23 @@ const dropdown = document.getElementById('city-list');
 // Create Option element with all the timeZones -- In dropdown menu
 for (let i = 0; i < timeZoneNames.length; i++) {
     window.city = document.createElement('option')
-    city.setAttribute("value", timeZoneNames[0][i])
+    city.setAttribute("value", timeZoneNames[0][i])     // Set element id to timezone name
     city.textContent = timeZoneNames[i][0]
     dropdown.appendChild(city)
 }
 
 // Updates textcontent(City and Continent) to timebox
 function updateTextContents(selector, city, continent){
-    if (city.includes('_')){
+
+    if (city.includes('_')){                            // Remove underscore from the timezone display text
         city = city.split('_').join(' ')
     }
     document.querySelector(`${selector} .city`).textContent = city
     document.querySelector(`${selector} .country`).textContent = continent
 }
 
-// Updates time to the mid time box
+// Updates time to page 
+// selector --> Id or Class name of the timezone box
 function updateTime(selector, time){
     document.querySelector(selector).textContent = time
 }
@@ -35,16 +37,18 @@ function calcTime(offsetHour, offsetMin){
     let newHour = currentHour + offsetHour
     let newMin = currentMin + offsetMin
 
-    // Calculating the minutes
-    if ((currentMin + offsetMin) > 60){newMin -= 60}
-    if (offsetMin < 0){
-        if (currentMin < Math.abs(offsetMin)){newHour += 1}
-    }
+    {   // Math operations for time
+        // Calculating the minutes
+        if ((currentMin + offsetMin) > 60){newMin -= 60}
+        if (offsetMin < 0){
+            if (currentMin < Math.abs(offsetMin)){newHour += 1}
+        }
 
-    // Calculating the Hour
-    if (newHour >= 24) {newHour -= 24}                                      // Next day
-    if (offsetHour < 0){
-        if ((currentHour < Math.abs(offsetHour))) {newHour += 24}           // Previous day
+        // Calculating the Hour
+        if (newHour >= 24) {newHour -= 24}                                      // Next day
+        if (offsetHour < 0){
+            if ((currentHour < Math.abs(offsetHour))) {newHour += 24}           // Previous day
+        }
     }
 
     // Check and correct time display format
@@ -65,6 +69,7 @@ function generateSmallTimezones(){
         let utcOffsetString = ct.getTimezone(arrayTimeZones[step]).utcOffsetStr.split(':')
         let hour = parseInt(utcOffsetString[0])
         let min = parseInt(utcOffsetString[1])
+        
         updateTextContents(`#${idValue}`, cityAndContinent[1], cityAndContinent[0])
         updateTime(`#${idValue} .digi-time`, calcTime(hour, min))
     }
@@ -74,14 +79,14 @@ function generateSmallTimezones(){
 dropdown.addEventListener('change', function() {
     let selectedTimeZone = dropdown.options[dropdown.selectedIndex].text
     let splitSelectedTimeZone = selectedTimeZone.split("/");
-    let utcOffsetString = ct.getTimezone(selectedTimeZone).utcOffsetStr.split(':')
-    let hour = parseInt(utcOffsetString[0])
-    let min = parseInt(utcOffsetString[1])
+    let utcOffsetArray = ct.getTimezone(selectedTimeZone).utcOffsetStr.split(':')      
+    let offsetHour = parseInt(utcOffsetArray[0])
+    let offsetMin = parseInt(utcOffsetArray[1])
     
     updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
     generateSmallTimezones() 
-    updateTime('#mid', calcTime(hour, min))
-  });
+    updateTime('#mid', calcTime(offsetHour, offsetMin))
+  })
 
 generateSmallTimezones()    
 updateTime(`#mid`, calcTime(00, 00))            // Set default time, corresponds with Africa/Lagos timezone
