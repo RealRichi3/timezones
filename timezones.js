@@ -18,7 +18,6 @@ function updateTextContents(selector, city, continent){
     if (city.includes('_')){
         city = city.split('_').join(' ')
     }
-    
     document.querySelector(`${selector} .city`).textContent = city
     document.querySelector(`${selector} .country`).textContent = continent
 }
@@ -28,44 +27,7 @@ function updateTime(selector, time){
     document.querySelector(selector).textContent = time
 }
 
-// Add offset to current time
-// function calcTime(offset){
-//     const date = new Date()
-//     // console.log(date.getHours() + ' : ' + date.getMinutes())
-//     let timeInMinutes = (date.getUTCHours() * 60) + (date.getUTCMinutes() + offset);
-//     let currTimeInHours = Math.floor(timeInMinutes / 60)
-//     let currTimeInMinutes = timeInMinutes % 60
-
-//     if (currTimeInHozurs >= 24){
-//         if ((currTimeInHours - 24) >= 6){
-//             currTimeInHours = (currTimeInHours - 24).toString()
-//         }
-//         else{
-//             currTimeInHours = '0' + (currTimeInHours - 24).toString()
-//         }
-//     }
-    
-//     if (String(currTimeInHours).length === 1){
-//         currTimeInHours = '0' + currTimeInHours
-//     }
-//     if (String(currTimeInMinutes).length === 1){
-//         currTimeInMinutes = '0' + currTimeInMinutes
-//     }
-
-//     return ((currTimeInHours + ':' + currTimeInMinutes).toString())
-// }
-
-// Listen for selected Timezone in dropdown menu
-// dropdown.addEventListener('change', function() {
-//     let selectedTimeZone = dropdown.options[dropdown.selectedIndex].text
-//     let splitSelectedTimeZone = selectedTimeZone.split("/");
-//     let offset = ct.getTimezone(selectedTimeZone).utcOffset
-//     updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
-//     updateTime('#mid', calcTime(offset))
-//   });
-
-
-// Calculate time and check time format
+// Add offset to current time and check time format
 function calcTime(offsetHour, offsetMin){
     const date = new Date()
     let currentMin = date.getMinutes()
@@ -73,20 +35,22 @@ function calcTime(offsetHour, offsetMin){
     let newHour = currentHour + offsetHour
     let newMin = currentMin + offsetMin
 
-    console.log((newHour + ' ' + newMin) + '---- new time')
     // Calculating the minutes
     if ((currentMin + offsetMin) > 60){newMin -= 60}
-    if ((Math.abs(currentMin) < Math.abs(offsetMin))){newHour += 1}
+    if (offsetMin < 0){
+        if (currentMin < Math.abs(offsetMin)){newHour += 1}
+    }
 
     // Calculating the Hour
-    if ((currentHour + offsetHour) > 24) {newHour -= 24;}          // Next day
-    if (Math.abs(currentHour) < Math.abs(offsetHour)) {newHour += 24}           // Previous day
+    if (newHour >= 24) {newHour -= 24}                                      // Next day
+    if (offsetHour < 0){
+        if ((currentHour < Math.abs(offsetHour))) {newHour += 24}           // Previous day
+    }
 
     // Check and correct time display format
     if (String(newHour).length === 1) {newHour = '0' + String(newHour)}
     if (String(newMin).length === 1) {newMin = '0' + String(newMin)}
 
-    console.log((newHour + ':' + newMin).toString())
     return ((newHour + ':' + newMin).toString())
 }
 
@@ -113,15 +77,13 @@ dropdown.addEventListener('change', function() {
     let utcOffsetString = ct.getTimezone(selectedTimeZone).utcOffsetStr.split(':')
     let hour = parseInt(utcOffsetString[0])
     let min = parseInt(utcOffsetString[1])
-    console.log(utcOffsetString)
-    // console.log(hour + ' ' + min)
-    calcTime(hour, min)
+    
     updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
-    // generateSmallTimezones() 
+    generateSmallTimezones() 
     updateTime('#mid', calcTime(hour, min))
   });
 
-// generateSmallTimezones()    
-// updateTime(`#mid`, calcTime(60, 00))
+generateSmallTimezones()    
+updateTime(`#mid`, calcTime(00, 00))            // Set default time, corresponds with Africa/Lagos timezone
 
 
