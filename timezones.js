@@ -70,9 +70,10 @@ function calcTime(offsetHour, offsetMin){
     const date = new Date()
     let currentMin = date.getMinutes()
     let currentHour = date.getHours()
-    let newHour = currentMin + offsetHour
-    let newMin = currentHour + offsetMin
+    let newHour = currentHour + offsetHour
+    let newMin = currentMin + offsetMin
 
+    console.log((newHour + ' ' + newMin) + '---- new time')
     // Calculating the minutes
     if ((currentMin + offsetMin) > 60){newMin -= 60}
     if ((Math.abs(currentMin) < Math.abs(offsetMin))){newHour += 1}
@@ -112,14 +113,15 @@ dropdown.addEventListener('change', function() {
     let utcOffsetString = ct.getTimezone(selectedTimeZone).utcOffsetStr.split(':')
     let hour = parseInt(utcOffsetString[0])
     let min = parseInt(utcOffsetString[1])
-    console.log(hour + ' ' + min)
+    console.log(utcOffsetString)
+    // console.log(hour + ' ' + min)
     calcTime(hour, min)
     updateTextContents('.mid-pane', splitSelectedTimeZone[1], splitSelectedTimeZone[0])
-    generateSmallTimezones()
-    // updateTime('#mid', calcTime(offset))
+    // generateSmallTimezones() 
+    updateTime('#mid', calcTime(hour, min))
   });
 
-generateSmallTimezones()
+// generateSmallTimezones()    
 // updateTime(`#mid`, calcTime(60, 00))
 
 
