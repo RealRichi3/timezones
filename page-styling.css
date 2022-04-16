@@ -8,6 +8,7 @@ body{
     /* display: flex; */
     font-size: 14px;
     background: url(./img/background-gd8bdb1f77_1920.jpg);
+    background-repeat: no-repeat;
 }
 
 .container {
