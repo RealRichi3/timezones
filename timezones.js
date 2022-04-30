@@ -23,17 +23,24 @@ function updateTextContents(selector, city, continent){
     document.querySelector(`${selector} .country`).textContent = continent
 }
 
-// Updates time to page 
-// selector --> Id or Class name of the timezone box
-function updateTime(selector, time){
-    document.querySelector(selector).textContent = time
+// Checks for Daylight Saving
+function checkDayLightSaving(timeZoneAttributes){
+    let dstOffsetString = timeZoneAttributes.dstOffsetStr.split(':')      // Daylight Savings Time
+    let daylightHour = 0;
+    
+    if (parseInt(dstOffsetString[0]) != 0){
+        daylightHour = 1
+    }
+
+    return daylightHour;
 }
 
 // Add offset to current time and check time format
 function calcTime(offsetHour, offsetMin){
     const date = new Date()
     let currentMin = date.getMinutes()
-    let currentHour = date.getHours()
+    let currentHour = date.getUTCHours()
+    // console.log(currentHour)
     let newHour = currentHour + offsetHour
     let newMin = currentMin + offsetMin
 
@@ -58,6 +65,13 @@ function calcTime(offsetHour, offsetMin){
     return ((newHour + ':' + newMin).toString())
 }
 
+
+// Updates time to page 
+// selector --> Id or Class name of the timezone box
+function updateTime(selector, time){
+    document.querySelector(selector).textContent = time
+}
+
 // To generate time and timezone for other boxes
 function generateSmallTimezones(){
     let arrayTimeZones = ["Europe/Paris", "Europe/London", "America/New_York", "Asia/Tokyo"]
@@ -66,8 +80,10 @@ function generateSmallTimezones(){
     for (let step = 0; step < arrayTimeZones.length; step++) {
         cityAndContinent = arrayTimeZones[step].split('/')
         let idValue = otherTimeBoxes[step].attributes[1].nodeValue
-        let utcOffsetString = ct.getTimezone(arrayTimeZones[step]).utcOffsetStr.split(':')
-        let hour = parseInt(utcOffsetString[0])
+        let timeZoneAttributes = ct.getTimezone(arrayTimeZones[step])
+        let utcOffsetString = timeZoneAttributes.utcOffsetStr.split(':')
+    
+        let hour = parseInt(utcOffsetString[0]) + checkDayLightSaving(timeZoneAttributes)
         let min = parseInt(utcOffsetString[1])
         
         updateTextContents(`#${idValue}`, cityAndContinent[1], cityAndContinent[0])
@@ -89,6 +105,6 @@ dropdown.addEventListener('change', function() {
   })
 
 generateSmallTimezones()    
-updateTime(`#mid`, calcTime(00, 00))            // Set default time, corresponds with Africa/Lagos timezone
+updateTime(`#mid`, calcTime(+1, 00))            // Set default time, corresponds with Africa/Lagos timezone
 
 
