@@ -1,4 +1,4 @@
-# Timezones
+# Timezones app
  
 This is a webpage i'm building, the aim is to show the current time in different time zones. It also allows you select a specific timezone
 
